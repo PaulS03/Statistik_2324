@@ -1,4 +1,4 @@
-daten <- read.csv("C://Users//pauls//Desktop//Statistik//tut1_2023.csv")
+daten <- read.csv("tut1_2023.csv")
 
 daten
 
@@ -68,7 +68,23 @@ mPCT <- mABS/181*100
 
 #Aufgabe_02
 
+BezGesTable <- table(daten$Geschlecht, daten$Partner)
 
+
+mBez_Perc <- (BezGesTable["maennlich", "ja"] / sum(BezGesTable["maennlich",]))*100 
+mBez_Perc
+wBez_Perc <- (BezGesTable["weiblich", "ja"] / sum(BezGesTable["weiblich",]))*100
+wBez_Perc
+
+if (mBez_Perc > wBez_Perc) {
+  print("Prozentual sind mehr Männer als Frauen in einer Beziehung.")
+} else if (wBez_Perc > mBez_Perc) {
+  print("Prozentual sind mehr Frauen als Männer in einer Beziehung.")
+} else {
+  print("Prozentual sind gleich viele Männer und Frauen in einer Beziehung.")
+}
+  
+  
 #Aufgabe_03
 
 m_daten <- daten$Handy[daten$Geschlecht=="maennlich"]
