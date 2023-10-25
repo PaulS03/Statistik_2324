@@ -19,6 +19,8 @@ daten$Handy[1:10]
 #second column
 daten[,2]
 
+daten[,3]
+
 #row five
 daten[5,]
 

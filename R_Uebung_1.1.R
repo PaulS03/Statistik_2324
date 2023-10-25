@@ -26,9 +26,10 @@ sum(x)
 x >= 4
 which(x>=4)
 max(x)
-which.max(x>=4)
+which.max(x)
 sort(x)
 unique(x)
+sort(unique(x))
 y <- unique(x)
 2*x
 2*y
