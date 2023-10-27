@@ -1,5 +1,7 @@
 daten <- read.csv("tut1_2023.csv")
 
+#hier ein Test
+
 daten
 
 # first 6
