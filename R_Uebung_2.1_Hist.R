@@ -17,18 +17,22 @@ b_k <- max_range-min_range
 size = length(faithful$waiting)
 size
 
-sum = 0
+summe = 0
 
 for (i in x) {
-  if(i>=min_range && i<max_range)
-    sum <- sum + 1
+  if(i>min_range && i<=max_range)
+    summe <- summe + 1
 }
 
-h_k <- sum
+h_k <- summe
 h_k
 
-heigth <- h_k/(size*b_k)*100
+heigth <- h_k/(size*b_k)
 heigth
+heigthP <- heigth*100
+heigthP
+
+sum(faithful$waiting>60 & faithful$waiting<=70)
 
 ############################################
 #b)
@@ -42,15 +46,7 @@ hist(time,
 
 ############################################
 #c)
-sum1 = 0
-
-for (i in x) {
-  if(i>=70 && i<=90)
-    sum1 <- sum1 + 1
-}
-
-
-heigth1 <- sum1/(size*20)
+sum(faithful$waiting>60 & faithful$waiting<=90)
 
 
 
