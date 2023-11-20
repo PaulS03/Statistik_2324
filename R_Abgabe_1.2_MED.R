@@ -1,4 +1,3 @@
-## ---- myrcode1.2.1
 Tore <- read.csv("Aufgabe2.csv")
 Tx <- sort(Tore$x)
 
@@ -8,18 +7,15 @@ freq <- table(Tx)
 max_freq <- names(freq)[which.max(freq)]
 max_freq
 
-## ---- myrcode1.2.2
 #b)
 mean(Tx)
 
 median(Tx) 
 
-## ---- myrcode1.2.3
 #c)
 korVar <- var(Tx) * (length(Tx)-1) / length(Tx)
 korVar
 
-## ---- myrcode1.2.4
 #d)
 a <- 0.9
 if (((length(Tx)*a) %% 1) != 0) { #case n*a is not integer
