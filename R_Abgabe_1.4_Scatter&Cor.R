@@ -1,27 +1,15 @@
 data <- mtcars
-data2 <- read.csv("all_seasons.csv")
 
-a <- data2$player_height
-b <- data2$gp
-c <- data2$ast
+head(data)
 
-plot(x,a)
-plot(a,c)
-
-cor(a,x)
-cor(a,c)
-
-x <- data$mpg
-y <- data$hp
-
-z <- data$qsec
-
-j <- data$wt
+x <- data$hp
+y <- data$mpg
 
 cor(x,y) #mpg to hp
 
-cor(x,z) #mpg to quarter mile
+plot(x,y,
+     main="Korrelation Verbrauch und Pferdestärke bei US Oldtimern",
+     xlab="Pferdestärke (in hp)",
+     ylab="Verbrauch (in mpg)",
+     pch=19)
 
-cor(j,z) #weight to quarter mile
-
-plot(y,x)
