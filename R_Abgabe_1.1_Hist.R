@@ -22,3 +22,10 @@ SHb <- b/(n*05);SHb
 SHc <- c/(n*10);SHc
 SHd <- d/(n*20);SHd
 SHe <- e/(n*40);SHe
+
+hist(Ex,
+     breaks = c(0,5,10,20,40,80),
+     prob=TRUE,                  #relative Häufigkeiten
+     bor="white",
+     xlab = "Wartezeiten",
+     ylab = "Relative Haeufigkeit")
