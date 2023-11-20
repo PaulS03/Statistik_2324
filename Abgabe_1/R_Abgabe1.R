@@ -29,7 +29,7 @@ SHe <- e/(n*40);SHe
 hist(Ex, 0,5,10,20,40,80)
 
 ## ---- myrcode1.2.1
-Tore <- read.csv("Aufgabe2.csv")
+Tore <- read.csv("../Aufgabe2.csv")
 Tx <- sort(Tore$x)
 
 #a)
@@ -61,7 +61,7 @@ if (((length(Tx)*a) %% 1) != 0) { #case n*a is not integer
 }
 
 ## ---- myrcode1.3.1
-data <- read.csv("mtcars.csv")
+data <- read.csv("../mtcars.csv")
 
 head(data)
 
