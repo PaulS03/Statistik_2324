@@ -26,8 +26,6 @@ SHc <- c/(n*10);SHc
 SHd <- d/(n*20);SHd
 SHe <- e/(n*40);SHe
 
-hist(Ex, 0,5,10,20,40,80)
-
 ## ---- myrcode1.2.1
 Tore <- read.csv("../Aufgabe2.csv")
 Tx <- sort(Tore$x)
