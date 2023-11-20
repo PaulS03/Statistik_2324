@@ -27,7 +27,7 @@ SHd <- d/(n*20);SHd
 SHe <- e/(n*40);SHe
 
 ## ---- myrcode1.2.1
-Tore <- read.csv("../Aufgabe2.csv")
+Tore <- read.csv("Aufgabe2.csv")
 Tx <- sort(Tore$x)
 
 #a)
@@ -49,17 +49,17 @@ korVar
 
 ## ---- myrcode1.2.4
 #d)
-a <- 0.9
-if (((length(Tx)*a) %% 1) != 0) { #case n*a is not integer
-  l_1 <- Tx[ceiling(length(Tx)*a)]
+q <- 0.9
+if (((length(Tx)*q) %% 1) != 0) { #case n*a is not integer
+  l_1 <- Tx[ceiling(length(Tx)*q)]
   cat(l_1 ,"Tore") #6 at index 276
 } else { #case n*a is integer
-  l_2 <- (Tx[length(Tx)*a] + (Tx[(length(Tx)*a)+1])) / 2
+  l_2 <- (Tx[length(Tx)*q] + (Tx[(length(Tx)*q)+1])) / 2
   cat(l_2 ,"Tore")
 }
 
 ## ---- myrcode1.3.1
-data <- read.csv("../mtcars.csv")
+data <- read.csv("mtcars.csv")
 
 head(data)
 
@@ -69,8 +69,8 @@ y <- data$mpg
 cor(x,y) #mpg to hp
 ## ---- myrcode1.3.2
 plot(x,y,
-     main="Korrelation Verbrauch und Pferdestärke bei US Oldtimern",
-     xlab="Pferdestärke (in hp)",
+     main="Korrelation Verbrauch und Pferdestaerke bei US Oldtimern",
+     xlab="Pferdestaerke (in hp)",
      ylab="Verbrauch (in mpg)",
      pch=19)
 
