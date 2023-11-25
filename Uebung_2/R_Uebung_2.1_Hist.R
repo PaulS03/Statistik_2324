@@ -42,7 +42,7 @@ hist(time,
      prob=TRUE,                  #relative Häufigkeiten
      bor="white",
      xlab = "Wartezeiten",
-     ylab = "Relative Häufigkeit") 
+     ylab = "Relative Haeufigkeit")
 
 ############################################
 #c)
