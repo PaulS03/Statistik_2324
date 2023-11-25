@@ -9,15 +9,15 @@ time <- faithful$waiting
 x <- sort(time)
 x
 
-min_range = 60
-max_range = 70
+min_range <- 60
+max_range <- 70
 
 b_k <- max_range-min_range
 
-size = length(faithful$waiting)
+size <- length(faithful$waiting)
 size
 
-summe = 0
+summe <- 0
 
 for (i in x) {
   if(i>min_range && i<=max_range)

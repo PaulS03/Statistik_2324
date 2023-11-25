@@ -4,8 +4,8 @@
 #(4,1),(4,2),(4,3),(4,4).
 
 n <- 1000000
-sa1 <- sample(c(1:4),size = n,replace = TRUE)
-sa2 <- sample(c(1:4),size = n,replace = TRUE)
+sa1 <- sample(1:4, size = n, replace = TRUE)
+sa2 <- sample(1:4, size = n, replace = TRUE)
 
 e <- sa1+sa2
 
