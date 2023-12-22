@@ -11,5 +11,17 @@ prob_zero_goals_simulation <- num_zero_goals / 100000
 
 median(simulated_results)
 
-prob_more_than_five_goals_simulation <- 1 - sum(dpois(0:5, 3.1))
-fair_odds <- 1 / prob_more_than_five_goals_simulation
+prob_MoreThanFive <- 1 - ppois(5,3.1)
+
+fairQuote <- 1 / prob_MoreThanFive
+
+#d)
+#E(Gewinn) = prob_More*Gewinn_More-prob_Less*NotGewinn_More
+#E(Gewinn) = 0
+# => prob_More*Gewinn_More = prob_Less*Einsatz
+#<=> prob_More * (Einsatz * (Quote-1)) = prob_Less*Einsatz
+#<=> prob_More * (Quote-1) = prob_Less
+#<=> prob_more*Quote - prob_More*1 = porb_Less
+#<=> prob_More*Quote = prob_Less + prob_More
+#<=> prob_More*Quote = 1
+#<=> Quote = 1 / prob_More
