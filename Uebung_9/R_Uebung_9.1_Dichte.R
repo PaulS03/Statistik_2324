@@ -10,7 +10,7 @@ abline(v=seq(-1.5,1.5,by=0.1),col="lightgrey")
 abline(h=seq(0,1,by=0.1),col="lightgrey")
 abline(v=c(0,0.4))
 
-integrate(f,0,0.4)$value
+integrate(f,0,1)$value
 ################################################################
 F <- function(x){
   Fx <- ifelse(x< -1,0,ifelse(x>1,1,15/16*(x-2/3*x^3+1/5*x^5+8/15)))
