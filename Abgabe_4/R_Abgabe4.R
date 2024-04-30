@@ -30,7 +30,7 @@ sortedSP500[1:2,]
 
 
 ## ---- myrcode4.2.2
-hist(SP500$Rendite,breaks=50,col="lightgrey",main="SP500 Rendite",
+hist(SP500$Rendite,breaks=50,col="lightgrey",main="S&P 500 Rendite",
      xlab="Taegliche Rendite", ylab="rel. Haeufigkeit",prob=TRUE,ylim=c(0,0.55))
 
 mu <- mean(SP500$Rendite); sigma <- sd(SP500$Rendite)
@@ -61,7 +61,7 @@ newStockPrice <- 5000 * (1 + simDayReturn/100); newStockPrice
 
 
 ## ---- myrcode4.3.2
-stockPrice <- list()
+stockPrice <- numeric(250)
 startPrice <- 5000
 previousPrice <- startPrice
 
@@ -71,6 +71,10 @@ for (i in 1:250) {
   stockPrice[i] <- currentPrice #append to current list
   previousPrice <- currentPrice #update previousPrice (for new day)
 }
+
+head(round(stockPrice,2))
+
+round(stockPrice[250],2)
 
 
 ## ---- myrcode4.3.3
@@ -90,15 +94,30 @@ for (j in 1:1000) {
 }
 my_data <- data.frame(x = 1:1000, value = endPrice_2)
 
-hist(my_data$value,breaks=100,col="lightgrey",main="a",xlab="a",ylab="a",
-     prob=TRUE,ylim=c(0,0.0006))
+hist(my_data$value,breaks=100,col="lightgrey",main="Verteilung der Simulation",
+     xlab="Indexwert (Punkte)",ylab="rel. Haeufigkeit", prob=TRUE,ylim=c(0,0.0006))
+
+## ---- myrcode4.4.1
+pnorm(600,500,sqrt(12500))-pnorm(0,500,sqrt(12500))
+
+## ---- myrcode4.4.2
+curve(dgamma(x,25,1/20),xlab="Dauer der Bearbeitung",from=0,to=1000,bty="n",lwd=2,ylab="Dichte")
+curve(dnorm(x,500,sqrt(12500)),col="red", from = 0,  to = 1000, add=TRUE)
+legend(480,0.004,"approx. Normalvert. nach ZGWS",lwd=2,col=2,bty="n")
 
 ## ---- myrcode4.5.1
 mu <- 3
 sigma_sq <- 4
 
-curve(dnorm(x,mu,sigma_sq/2),from=-1,to=7,bty="n",ylim=c(0,0.45),ylab="Dichte")
+curve(dnorm(x,mu,sigma_sq/2),from=-1,to=7,bty="n",ylim=c(0,0.6),col="green",
+      ylab="Dichte", main="Schaetzer")
 curve(dnorm(x,mu,sigma_sq/3),from=-1,to=7,bty="n",col="red",add=TRUE)
-curve(dnorm(x,59/60*mu,(713/3600)*sigma_sq),from=-1,to=7,bty="n",col="blue",add=TRUE)
+curve(dnorm(x,(59/60)*mu,(713/3600)*sigma_sq),from=-1,to=7,bty="n",col="blue",add=TRUE)
+curve(dnorm(x,mu,sigma_sq),from=-1,to=7,bty="n",add=TRUE)
+
+legend(4,0.51,"mu_1",lwd=2,col="green",bty="n")
+legend(4,0.48,"mu_2",lwd=2,col="red",bty="n")
+legend(4,0.45,"mu_3",lwd=2,col="blue",bty="n")
+legend(4,0.54,"wahr",lwd=2,col="black",bty="n")
 
 abline(v = mu, col="gray", lty="dotted")
