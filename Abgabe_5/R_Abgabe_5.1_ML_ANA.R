@@ -1,0 +1,1 @@
+dauer <- read.csv("kegelrobbe.csv")$x

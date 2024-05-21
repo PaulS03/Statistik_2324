@@ -1,0 +1,1 @@
+gewicht <- read.csv("gewicht.csv")$x
