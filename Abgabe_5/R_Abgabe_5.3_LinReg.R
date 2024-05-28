@@ -3,13 +3,20 @@ library(ggplot2)
 airbnb <- read.csv("airbnb.csv")
 attach(airbnb)
 
-ggplot(airbnb, aes(x=Distanz, y=Preis))+
-  geom_point()+
-  labs(x="Distanz zum Stadtzentrum (km)", y="Preis (EUR)")
+ggplot(airbnb, aes(x = Distanz, y = Preis)) + geom_point()
 
-modell <- lm(Preis ~ Distanz, data = airbnb)
+#plot(Distanz,Preis,pch=19,xlab="Distanz in km",ylab="Preis in Euro",
+#     bty="n",cex=0.6,xlim=c(0,max(Distanz)),ylim=c(18,max(Preis)))
+#abline(a=73,b=-8,col=2,lwd=2)
 
-summary(modell)
+modell <- lm(Preis~Distanz)$coeff; modell
+b_0 <- as.numeric(modell[1])
+b_1 <- as.numeric(modell[2])
+
+
+change <- b_1 * 3
+change
+
 
 beta_1 <- coef(modell)["Distanz"]
 delta_km <- 3

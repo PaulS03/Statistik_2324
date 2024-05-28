@@ -95,7 +95,10 @@ for (j in 1:1000) {
 my_data <- data.frame(x = 1:1000, value = endPrice_2)
 
 hist(my_data$value,breaks=100,col="lightgrey",main="Verteilung der Simulation",
-     xlab="Indexwert (Punkte)",ylab="rel. Haeufigkeit", prob=TRUE,ylim=c(0,0.0006))
+     xlab="Indexwert (Punkte)",ylab="Haeufigkeit")
+
+hist(my_data$value,breaks=100,col="lightgrey",main="Verteilung der Simulation",
+     xlab="Indexwert (Punkte)",ylab="Haeufigkeit", prob=TRUE, ylim = c(0,0.0006))
 
 ## ---- myrcode4.4.1
 pnorm(600,500,sqrt(12500))-pnorm(0,500,sqrt(12500))
