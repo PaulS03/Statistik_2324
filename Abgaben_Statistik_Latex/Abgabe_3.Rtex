@@ -1,0 +1,190 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[rightcaption]{sidecap}
+\usepackage{blindtext}
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=37mm,
+ right=37mm,
+ top=25mm
+ }
+
+\title{Statistik I}
+\author{Paul Strimtu {\small 3898312}\\ Jakob Striegel {\small 4351490}}
+\date{Abgabe 3: 22 Januar 2024}
+
+\begin{document}
+\maketitle
+<<echo=FALSE, cache=FALSE>>=
+read_chunk("Abgabe_3/R_Abgabe3.R")
+@
+
+\section{Fu{\ss}g\"angerzone}
+\subsection{a)}
+Die Situation wird am besten durch eine Geometrische Verteilung beschrieben, da es sich um eine Menge von
+unabh\"angigen Bernoulli-Versuchen (Patenschaft abgeschlossen / nicht abgeschlossen) handelt.\\
+Da im Schnitt nur jeder 80. Versuch zum Erfolg f\"uhrt, ist $p=\frac{1}{80}$.\\\\
+Nach Vorlesung gilt:
+\begin{flalign*}
+E(X)  = \frac{1}{p} = \frac{1}{\frac{1}{80}}  = 80.
+\end{flalign*}
+
+\subsection{b)}
+W'keit daf\"ur, dass nach 200 angesprochenen Passanten, noch keine Patenschaft erfolgreich abgeschlossen wurde:
+<<myrcode3.1.1>>=
+@
+
+\subsection{c)}
+<<myrcode3.1.2>>=
+@
+Ergebnisse passen grob (da Simulation) zu den Teilergebnissen aus a) und b).
+\pagebreak
+\subsection{d)}
+$P(X\leq k) & = 1-(\frac{79}{80})^k, \hspace{0.5cm} P(X\leq k) \geq 0,8$
+\begin{flalign*}
+\Rightarrow    1- \left( \frac{79}{80} \right)^k &\geq 0,8&\\
+\Leftrightarrow  \left(\frac{79}{80}\right)^k &\leq 0,2&\\
+\Leftrightarrow  k*ln\left(\frac{79}{80}\right) &\leq ln(0,2)&\\
+\Leftrightarrow  k &\geq \frac{ln(0,2)}{ln(\frac{79}{80})} \approx 128&
+\end{flalign*}\\
+
+<<myrcode3.1.4>>=
+@
+Es m\"ussen mindestens 128 Passanten befragt werden, damit mit einer W'keit von mindestens $80\%$ eine Patenschaft zustandekommt.
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Eurostar}
+\subsection{a)}
+<<myrcode3.2.1>>=
+@
+Die W'keit daf\"ur, dass bei 935 verkauften Tickets, alle Passagiere, die erschienen sind, auch 
+einsteigen k\"onnen, betr\"agt ca. $82,5\%$.
+\subsection{b)}
+<<myrcode3.2.2>>=
+@
+Der Betreiber k\"onnte maximal 921 Tickets verkaufen, sodass mit einer W'keit von $99,9\%$ alle erschienenen Passagiere auch einsteigen k\"onnen.
+\subsection{c)}
+\subsubsection{Zuf\"alliges n (sold)}
+<<myrcode3.2.3>>=
+@
+Bei $n=930$ (sold) ist das obere Ergebnis der durchschnittliche Gewinn beim jeweiligen Simulationsdurchlauf.
+\pagebreak
+\subsubsection{Optimales n}
+<<myrcode3.2.4>>=
+@
+Das kostenoptimale n liegt in diesem Fall bei 932. Der Betreiber erzielt also bei 932 verkauften Tickets den h\"ochsten Gewinn, wobei der Gewinn aufgrund der zuf\"alligen Simulation leicht variieren kann.
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Dichtefunktion \& Verteilungsfunktion}
+\subsection{a)}
+ \begin{flalign*}
+    f(x) = \begin{dcases*}
+        \frac{3}{8}(1-\frac{x^2}{4}) & f\"ur $-2 \leq x \leq 2$,\\
+        0 & sonst. 
+        \end{dcases*}
+  \end{flalign*}
+  
+<<myrcode3.3.1>>=
+@
+\pagebreak
+
+\subsection{b)}
+\begin{flalign*}
+F(x) & = \int \frac{3}{8}\left(1-\frac{x^2}{4}\right)dx&\\
+     & = \frac{3}{8}\int \left( 1-\frac{x^2}{4}\right)dx&\\
+     & = \frac{3}{8}\left(x-\frac{x^3}{12}\right)&\\
+\end{flalign*}\\
+\vspace{-15mm}
+
+ \begin{flalign*}
+   \Rightarrow F(x) = \begin{dcases*}
+        0 & f\"ur $x < -2$,\\
+        \frac{3}{8}\left(x-\frac{x^3}{12}\right)+\frac{1}{2} & f\"ur $-2 \leq x \leq 2$,\\
+        1 & f\"ur$x > 2$. 
+        \end{dcases*}
+  \end{flalign*}
+Die $+\frac{1}{2}$ ist als Korrektur f\"ur die Darstellung der Verteilungsfunktion da, 
+sodass die y-Skala Werte von 0 bis 1 und nicht -0.5 bis 0.5 anzeigt.
+<<myrcode3.3.2>>=
+@
+
+\subsection{c)}
+\subsubsection{$P(0<X<1)$ mit R-Befehl}
+<<myrcode3.3.3>>=
+@
+\subsubsection{$P(0<X<1)$ mit Verteilungsfunktion}
+<<myrcode3.3.4>>=
+@
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Erwartungswert, Varianz \& Quantil}
+\subsection{a)}
+\begin{flalign*}
+E(x) & = \int_{-2}^2 xf(x)dx&\\
+     & = \int_{-2}^2 \left(\frac{3}{8}x\left(1-\frac{x^2}{4}\right)\right)dx&\\
+     & = \frac{3}{8} \int_{-2}^2 x-\frac{x^3}{4}dx&\\
+     & = \frac{3}{8} \bigg[\frac{x^2}{2} - \frac{x^4}{16} \bigg]_{-2}^{2}&\\
+     & = \frac{3}{8}((2-1)-(2-1))&\\
+     & = \frac{3}{8}(1-1)&\\
+     & = 0&
+\end{flalign*}
+
+\subsection{b)}
+\begin{flalign*}
+\int (x-E(x))^2f(x)dx & = \int \frac{3}{8}x^2(1-\frac{x^2}{4})dx&\\
+       & = \int \left(\frac{3x^2}{8}-\frac{3x^2}{32}\right)dx&\\
+       & = \frac{3}{8} \int x^2dx - \frac{3}{32} \int x^4dx&\\
+       & = (\frac{3}{8}*\frac{x^3}{3}) - (\frac{3}{32} * \frac{x^5}{5})&\\
+       & = \frac{x^3}{8} - \frac{3x^5}{160}&
+\end{flalign*}
+
+\begin{flalign*}
+\Rightarrow Var(X) & = \int_{-2}^2 (x-E(x))^2f(x)dx&\\
+       & = \bigg[\frac{x^3}{8} - \frac{3x^5}{160}\bigg]_{-2}^{2}&\\
+       & = \left(1-\frac{96}{160}\right)-\left(-1+\frac{96}{160}\right)&\\
+       & = \frac{64}{160}+\frac{64}{160}&\\
+       & = \frac{128}{160}&\\
+       & = \frac{4}{5}&\\
+\end{flalign*}
+
+\subsection{c)}
+<<myrcode3.4.1>>=
+@
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Kaffee bei Hasan}
+\subsection{Absch\"atung des Fl\"acheninhaltes}
+<<myrcode3.5.1>>=
+@
+$\square \widehat{=} 0,01 = 0,001*10$\\
+Bei ca. 55 K\"astchen betr\"agt die Fl\"ache ungef\"ahr 0.55 FE.
+
+\subsection{Integration}
+\subsubsection{Numerisch}
+<<myrcode3.5.2>>=
+@
+
+\subsubsection{Exakt}
+\begin{flalign*}
+\int_0^{50} k(x)dx & = \int_0^{50} \frac{2}{125}e^{(\frac{-2x}{125})}dx \hspace{2cm}
+u=\frac{2x}{125},\hspace{2mm}\frac{du}{dx}=\frac{2}{125},\hspace{2mm}dx=\frac{125du}{2}&\\
+       & = \int_0^{50} e^{-u}du&\\
+       & = \bigg[-e^{\frac{-2x}{125}}\bigg]_{0}^{50}&\\
+       & = -e^{-\frac{100}{125}}+e^0&\\
+       & = 1-e^{-\frac{4}{5}}&
+\end{flalign*}
+
+\subsection{R-Befehl}
+<<myrcode3.5.3>>=
+@
+
+\end{document}

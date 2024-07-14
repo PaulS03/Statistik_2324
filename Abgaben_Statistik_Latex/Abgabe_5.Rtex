@@ -1,0 +1,211 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[rightcaption]{sidecap}
+\usepackage{blindtext}
+\usepackage[latin1, utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage{amsmath}
+\usepackage{dsfont}
+\usepackage{mathtools}
+
+% Standardpakete für deutsche Sprache
+%\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+%\usepackage[T1]{fontenc}
+
+%Paket für Aufzählungsbuchstaben
+\usepackage{enumitem}
+
+%Paket für Einheiten
+\usepackage{siunitx}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=30mm,
+ right=30mm,
+ top=25mm
+ }
+
+\title{Statistik II}
+\author{Paul Strimtu {\small 3898312}\\ Jakob Striegel {\small 4351490}}
+\date{Abgabe 5: 27 Mai 2024}
+
+\begin{document}
+\maketitle
+<<echo=FALSE, cache=FALSE>>=
+read_chunk("R_Abgabe5.R")
+@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Maximum-Likelihood-Schätzung (analytisch)}
+
+Sei $f_{\theta}(x) = \frac{\theta^6 x^5}{120}e^{-\theta x}, x>0$ die Dichte der gegebenen Verteilung zu 100 Tauchgängen von Kegel-robben ($i \in \{1,\dotsb,100\}$ und $n = 100$). \\
+
+\subsection*{Allgemein}
+$\Rightarrow \mathcal{L}(\theta) = f_{\theta}(x_1,\dotsb,x_n) \overset{iid}{=} \displaystyle \prod_{i=1}^{n} f_{\theta}(x_i) = 
+\displaystyle \prod_{i=1}^{n} \frac{\theta^6 x_i^5}{120}e^{-\theta x_i} = \left( \frac{\theta^6}{120} \right)^n \left( \displaystyle \prod_{i=1}^{n} x_i \right)^5 exp \left( -\theta \small{\displaystyle \sum_{i=1}^{n} x_i} \right)$
+\\\\
+$\Rightarrow \ell(\theta) = \log(\mathcal{L}(\theta)) = 6n \log(\theta) - n \log(120) + 5 \displaystyle \sum_{i=1}^{n} x_i - \theta \displaystyle \sum_{i=1}^{n} x_i $
+\\\\
+$\Rightarrow \ell'(\theta) = \frac{6n}{\theta} - \displaystyle \sum_{i=1}^{n} x_i$
+\\\\
+$\Rightarrow \ell'(\theta) = 0 \Leftrightarrow \frac{1}{\theta} = \frac{ \sum_{i=1}^{n} x_i}{6n} \Leftrightarrow \theta = 
+\frac{6n}{ \sum_{i=1}^{n} x_i} \Leftrightarrow \theta = \frac{6n}{n\bar{x}} \Rightarrow \hat{\theta} = \frac{6}{\bar{x}}$
+\\\\
+Der allgemeine ML-Schätzer lautet $\hat{\theta} = \frac{6}{\bar{x}}$.
+
+\subsection*{Konkret }
+Für die konkrete Berechnung werden $n=100$ und $\hat{x}$ als arithmetisches Mittel der gegebenen Daten genutzt.
+
+\begin{center}
+<<myrcode5.1.1, out.width='10cm'>>=
+@
+\end{center}
+
+\begin{center}
+    <<myrcode5.1.2, out.width='10cm'>>=
+    @
+\end{center}
+Der ML-Schätzer für die gegebenen Daten liegt rechnerisch und grafisch bei ca. $\hat{\theta} = 0.0407$
+\\
+Mithilfe des ML-Schätzers kann nun eine angepasste Dichtefunktion erstellt werden, die die gegebenen Daten gut abbildet. Das kann man im folgenden Histogramm der Daten der roten Kurve (Dichtefunktion) sehen:  
+
+\begin{center}
+    <<myrcode5.1.3, out.width='10cm'>>=
+    @
+\end{center}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Maximum-Likelihood-Schätzung (numerisch)}
+Sei $f_{\theta}(x) = 5\theta^2 x^4 e^{-(\theta x)^5}, x>0$ die Dichte der gegebenen Verteilung zum Gewicht von 439 Neugeborenen ($i \in \{1,\dotsb,439\}$ und $n = 439$). \\
+
+\subsection*{Allgemein}
+\begin{flalign*}
+    \ell(\theta) & = \log(f_\theta(x_1, \dotsb , x_n))&\\
+     & = \log \left(\displaystyle \prod_{i=1}^{n} f_\theta(x_i) \right)&\\
+     & = \displaystyle \sum_{i=1}^{n} \left( \log f_\theta(x_i) \right)&\\
+     & = \displaystyle \sum_{i=1}^{n} \left( \log(5) + \log(\theta^5) + \log(x_i^4) + \log(exp(-(\theta x_i)^5) \right)&\\
+     & = n\log(5) + 5n\log(\theta) + 4 \displaystyle \sum_{i=1}^{n} \log(x_i) - \theta^5 \displaystyle \sum_{i=1}^{n} x_i^5&
+\end{flalign*}
+
+\begin{flalign*}
+    \Rightarrow \ell'(\theta) & = \frac{5n}{\theta} - 5 \theta^4 \displaystyle \sum_{i=1}^{n} x_i^5&\\
+    \Rightarrow \ell''(\theta) & = -\frac{5n}{\theta^2} - 20 \theta^3 \displaystyle \sum_{i=1}^{n} x_i^5
+\end{flalign*}
+
+\begin{flalign*}
+    \Rightarrow \ell'(\theta) = 0 \Leftrightarrow \frac{5n}{\theta} & = 5\theta^4\displaystyle \sum_{i=1}^{n} x_i^5 \Leftrightarrow \theta^5 \displaystyle \sum_{i=1}^{n} x_i^5 = n \Leftrightarrow \theta^5 = \frac{n}{\sum_{i=1}^{n} x_i^5}
+    \Rightarrow \hat{\theta} = \frac{1}{\left(\bar{x}^5 \right) ^{1/5}}&
+\end{flalign*}
+
+\\
+Der allgemeine ML-Schätzer lautet $\hat{\theta} = \frac{1}{\left(\bar{x}^5 \right) ^{1/5}}$.
+
+\subsection*{Konkret }
+Für die konkrete Berechnung werden $n=439$ und $\hat{x}$ als arithmetisches Mittel der gegebenen Daten genutzt.
+
+\begin{center}
+<<myrcode5.2.1, out.width='10cm'>>=
+@
+\end{center}
+
+\begin{center}
+    <<myrcode5.2.2, out.width='10cm'>>=
+    @
+\end{center}
+Der ML-Schätzer für die gegebenen Daten liegt rechnerisch und grafisch bei ca. $\hat{\theta} = 0.000305$.
+
+\subsection*{Newton-Raphson Verfahren}
+<<myrcode5.2.3>>=
+@
+
+Mit dem Newton-Raphson Verfahren (in R) ergeben sich nach mindestens 4 Iterationen die selben Werte für den Schätzer $\hat{\theta}$, die auch zuvor exakt und grafisch bestimmt wurden.
+\\
+Mithilfe des ML-Schätzers kann nun eine angepasste Dichtefunktion erstellt werden, die die gegebenen Daten gut abbildet. Das kann man im folgenden Histogramm der Daten der roten Kurve (Dichtefunktion) sehen:
+
+\begin{center}
+    <<myrcode5.2.4, out.width='10cm'>>=
+    @
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Lineare Regression}
+\subsection*{a)}
+    \begin{center}
+        <<myrcode5.3.1, fig.width=10, fig.height=5>>=
+        @
+    \end{center}
+
+
+\subsection*{b)}
+    \begin{center}
+        <<myrcode5.3.2>>=
+        @
+    \end{center}
+
+Das Regressionsmodell lautet:
+
+\begin{center}
+    $Y_i = 73.385 - 2.814x_i + \epsilon_i$.
+\end{center}
+Er ist also ein mittlerer Preis von ca $73.39$ Euro zu erwarten bei einer Entfernung von $\qty{500}{\m}$ und für jeden weiteren $km$ von der Innenstadt entfernt, wird sich dieser Preis um ca. $2.81$ Euro pro km verringen.
+
+    \begin{center}
+        <<myrcode5.3.3>>=
+        @
+    \end{center}
+Der mittlere Preis würde sich z.B. um $8.44$ Euro verringen, wenn man $\qty{3}{\km}$ zusätzliche Entfernung in Kauf nimmt.
+
+\pagebreak
+\subsection*{c)}
+    \begin{center}
+        <<myrcode5.3.4, fig.width=10, fig.height=5>>=
+        @
+    \end{center}
+
+\subsection*{d)}
+
+    \begin{center}
+        <<myrcode5.3.5>>=
+        @
+    \end{center}
+\\
+Gemäß des Modells wäre die Distanz zum Stadtzentrum etwa $\qty{4.76}{\km}$, um einen mittleren Preis von $60$ Euro zu erhalten.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Breite von Konfizendintervallen}
+\subsection*{a)}
+Die minimale Stichprobengröße $n$, die für $X_1,\dotsb,X_n \overset{iid}{\sim} Bern(p)$ ein $90\%$-KI mit $max. B = 0.05$ garantiert, lautet:
+\begin{center}
+    $n \geq \frac{z_{\small{1-(\alpha/2)}}^2}{B^2} = \frac{1.6449^2}{0.05^2} = 1082.278 \approx \underline{1083}$.
+\end{center}
+
+\subsection*{b)}
+Die minimale Stichprobengröße $n$, die für $X_1,\dotsb,X_n \overset{iid}{\sim} Bern(p)$ ein $95\%$-KI mit $max. B = 0.05$ und $\hat{p} \leq 0.2$ garantiert, lautet:
+\begin{center}
+    $n \geq \frac{4z_{\small{1-(\alpha/2)}}^2 \hat{p} ( 1- \hat{p})}{B^2} = \frac{4z_{\small{0.975}}^2 \cdot 0.2 \cdot 0.8}{0.05^2} = \frac{4 \cdot 1.96^2 \cdot 0.2 \cdot 0.8 }{0.05^2} = 983.45 \approx \underline{984}$.
+\end{center}
+
+\subsection*{c)}
+Die minimale Stichprobengröße $n$, die für $X_1,\dotsb,X_n \overset{iid}{\sim} N(\mu, \sigma^2)$ ein $90\%$-KI mit $max. B = 0.05$ und $\sigma = 1$ garantiert, lautet:
+\\
+    \begin{flalign*}
+        B & = 2 z_{1-\alpha/2} \sqrt{\frac{Var(x)}{n}}&\\
+      \Leftrightarrow B & = 2 z_{1-\alpha/2} \sqrt{\frac{\sigma^2}{n}}&\\
+      \Leftrightarrow B & = 2 z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}&\\
+      \Leftrightarrow n & = \left(  \frac{2 z_{1-\alpha/2} \sigma}{B}  \right)^2&
+    \end{flalign*}\\\\
+
+\begin{center}
+    $\Rightarrow n \geq \left(  \frac{2 z_{1-\alpha/2} \sigma}{B}  \right)^2 = \left(  \frac{2 \cdot 1.6449 \cdot 1}{0.05}  \right)^2 = 4329.114 \approx \underline{4330}$.
+\end{center}
+Wenn $\sigma$ bzw. $\sigma^2$ unbekannt ist, gäbe es zwei unbekannte Variablen in der Rechnung und man müsste eine andere Stichprobenstandardabweichung nutzen. Dies würde dazu führen, dass eine $t$-Verteilung (also Student) anstatt der vorgegebenen Normalverteilung genutzt werden muss.
+\end{document}

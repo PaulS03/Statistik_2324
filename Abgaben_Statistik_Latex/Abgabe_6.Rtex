@@ -1,0 +1,169 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[rightcaption]{sidecap}
+\usepackage{blindtext}
+\usepackage[latin1, utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage{amsmath}
+\usepackage{dsfont}
+\usepackage{mathtools}
+
+% Standardpakete für deutsche Sprache
+%\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+%\usepackage[T1]{fontenc}
+
+%Paket für Aufzählungsbuchstaben
+\usepackage{enumitem}
+
+%Paket für Einheiten
+\usepackage{siunitx}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=30mm,
+ right=30mm,
+ top=25mm
+ }
+
+\title{Statistik II}
+\author{Paul Strimtu {\small 3898312}\\ Jakob Striegel {\small 4351490}}
+\date{Abgabe 6: 24 Juni 2024}
+
+\begin{document}
+\maketitle
+<<echo=FALSE, cache=FALSE>>=
+read_chunk("R_Abgabe6.R")
+@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Sinusvenenthrombosen}
+In der folgenden Aufgabe soll mit Hilfe eines Binomialtests überprüft werden, ob die Anzahl an Sinusvenenthrombosen unter den Geimpften dafür spricht, dass das Risiko einer solchen Erkrankung durch die Astrazeneca-Impfung erhöht wird - dazu stehen die folgenden Daten zur Verfügung:
+
+\begin{itemize}
+    \item Stichprobegröße $n=5.000.000$
+    \item W'keit krank ohne Impfung $p_0 = \qty{0,000025}{\percent} = \frac{1}{4.000.000}$
+    \item Beobachtete Anzahl an Sinusvenenthrombosen  $k = 10$
+    \item Signifikanziveau $\alpha = 0.01$
+\end{itemize}
+\\
+Im Folgenden sei auch für $i \in \{1,2,3, \dotsb , 5.000.000\}$:
+
+\begin{flalign*}
+    X_i = \begin{dcases*}
+        1 & falls die $i$-te Person krank ist,\\
+        0 & sonst. 
+        \end{dcases*}
+\end{flalign*}
+\\
+$H_0: p_s \leq p_0$ besagt, dass die W'keit zur Erkrankung, nicht höher als $p_0$ ist.\\
+$H_1: p_s > p_0$ besagt, dass die W'keit zur Erkrankung mit der Impfung, höher als $p_0$ ist.\\
+\\
+Seien dann
+\begin{center}
+    $X \sim B(5.000.000, \displaystyle \frac{1}{4.000.000})$\\\\
+    $\mathds{E}(X)=n\cdot p_0 = \displaystyle \frac{5.000.000}{4.000.000} = 1,25$.
+\end{center}
+\\
+%Unter der Annahme, dass $H_0$ wahr ist, kann die folgende Verteilung der Teststatistik in R gezeichnet werden:
+Ermittlung des Ablehnungsbereiches: 
+<<myrcode6.1.1,>>=
+@  %out.width='10cm'\\
+\\
+$1-pbinom(4,\dotsb)  \approx 0,00912 < 0,01 = \alpha \Rightarrow C=\{5,6,\dotsb,5.000.000\}$  
+\\\\
+Da $k=10 \in C$, wird $H_0$ zum Niveau $\alpha=0,01$ abgelehnt, d.h. dass die Impfung mit Astrazeneca das Risiko einer Sinusvenenthrombosen Erkrankung erhöht.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Buy-the-Dip}
+In dieser Aufgabe soll untersucht werden, ob die durchschnittliche prozentuale Veränderung des DAX an einem Tag systematisch von 0 abweicht, wenn der Index am Vortag um 5\% oder mehr gefallen ist. Dazu werden zuerst die Tage mit einem Rückgang von mindestens 5\% ($dayFallingBelow\_5$) ausgesucht und die \%-Veränderungen des DAX an den jeweiligen Folgetagen ($dayNext$) gespeichert, um  einen t-Test durchzuführen, der die systematische Abweichung von 0 überprüft.\\
+\\
+$H_0=\mu   =  \mu_0=0$.\\
+$H_1=\mu \neq \mu_0 = 0$.
+
+<<myrcode6.2.1>>=
+@
+
+Sei dann die Teststatistik
+\begin{center}
+    $\displaystyle T= \frac{\Bar{X_n}-\mu_0}{\frac{\sigma}{\sqrt{n}}}$
+\end{center}
+
+<<myrcode6.2.2>>=
+@
+$\Rightarrow T = 2.09492$
+\\\\
+Der Ablehnungsbereich $C=(-\infty,-t_{1-\alpha/2,n-1}) \cup (t_{1-\alpha/2,n-1}, \infty)$ kann folgendermaßen in R berechnet werden:
+
+<<myrcode6.2.3>>=
+@
+$\Rightarrow C=(-\infty,-2.026192) \cup (2.026192, \infty)$\\
+Somit gilt $T \in C$, sodass $H_0$ abgelehnt wird.
+\\\\
+Zuletzt kann wird noch der $p$-Wert bestimmt:
+<<myrcode6.2.4>>=
+@
+$\Rightarrow p=0.04308197$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Roulette}
+Um die Gleichverteilung der 37 möglichen Ausgänge beim Rouletterad zu überprüfen, kann ein Chi-Quadrat-Anpassungstest durchgeführt werden.\\
+\\
+$H_0:P(X_i=k) = p_k$ für $k=1,\dotsb,37$\\
+$H_1:P(X_i=k) \neq p_k$ für min. ein $k$
+\\\\
+Sei dann die Verteilung der Teststatistik mit $a,b \geq 30$
+\begin{center}
+    $\displaystyle \chi^2= \sum_{k=1}^{K} \frac{(h_k-n\cdot p_k)^2}{n\cdot p_k}$
+\end{center}
+
+<<myrcode6.3.1,>>=
+@
+
+Der Ablehnungsbereich $C=(\chi^2_{1-\alpha,K-1},\infty)$ kann folgendermaßen in R berechnet werden:
+<<myrcode6.3.2,>>=
+@
+
+$\Rightarrow C=(50.99846, \infty)$\\
+Somit ist $\chi^2=48.506 \notin C$, sodass $H_0$ beibehalten wird. Es gibt also keine statistische Evidenz dafür, dass es bei einem Signifikanzniveau von $\alpha=0.05$ eine Ungleichverteilung der 37 verschiedenen Ausgänge des Rouletterades gibt.
+\\\\
+Zuletzt kann wird noch der $p$-Wert bestimmt:
+<<myrcode6.3.3,>>=
+@
+$\Rightarrow p=0.07960126$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Einstiegsgehälter}
+Um die Erwartungen hinsichtlich des Einstiegsgehalts zwischen weiblichen und männlichen Studierenden zu vergleichen, kann ein approximativenr Zwei-Stichproben-Gaußtest (Z-Test) durchgeführt werden.\\
+%Gegeben seien die unabhängigen Zufallsvariablen $M_1,M_2,\dotsb,M_a$ und $W_1,W_2,\dotsb,W_b$.
+\\\\
+$H_0: \mu_W \leq \mu_M$ besagt, dass das Einstiegsgehalt der Männer höher ist.\\
+$H_1: \mu_W > \mu_M$ besagt, dass das Einstiegsgehalt der Frauen höher ist.
+\\\\
+Sei dann die Verteilung der Teststatistik mit $a,b \geq 30$
+\begin{center}
+    $\displaystyle Z= \frac{\Bar{M_a}-\Bar{W_b}}{\sqrt{\sigma_M^2/a + \sigma_W^2/b}}$
+\end{center}
+
+<<myrcode6.4.1>>=
+@
+$\Rightarrow Z = 1.158768$
+\\\\
+Der Ablehnungsbereich $C=(z_{1-\alpha},\infty)$ kann folgendermaßen in R berechnet werden:
+
+<<myrcode6.4.2,>>=
+@
+$\Rightarrow C=(2.326348, \infty)$\\
+Somit ist $Z=1.158968 \notin C$, sodass $H_0$ beibehalten wird. Es gibt also eine statistische Signifikanz dafür, dass Männer ein höheres Einstiegsgehalt als Frauen bekommen.
+\\\\
+Zuletzt kann wird noch der $p$-Wert bestimmt:
+<<myrcode6.4.3,>>=
+@
+$\Rightarrow p=0.1232754$
+
+\end{document}

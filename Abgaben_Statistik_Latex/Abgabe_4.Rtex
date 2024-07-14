@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[rightcaption]{sidecap}
+\usepackage{blindtext}
+\usepackage[latin1, utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage{amsmath}
+\usepackage{dsfont}
+\usepackage{mathtools}
+
+% Standardpakete für deutsche Sprache
+%\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+%\usepackage[T1]{fontenc}
+
+%Paket für Aufzählungsbuchstaben
+\usepackage{enumitem}
+
+%Paket für Einheiten
+\usepackage{siunitx}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=30mm,
+ right=30mm,
+ top=25mm
+ }
+
+\title{Statistik II}
+\author{Paul Strimtu {\small 3898312}\\ Jakob Striegel {\small 4351490}}
+\date{Abgabe 4: 29 April 2024}
+
+\begin{document}
+\maketitle
+<<echo=FALSE, cache=FALSE>>=
+read_chunk("R_Abgabe4.R")
+@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Zweidimensionale Verteilung}
+<<myrcode4.1.1>>=
+@
+\newline
+Es besteht eine hohe negative Korrelation zwischen den diskreten Variablen $X$ und $Y$.\\ Diese beträgt ca. $\rho = -0.84$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Normalverteilung}
+\subsection*{a)}
+<<myrcode4.2.1>>=
+@
+Die zwei Tage, an denen die höchsten prozentualen Verluste auftraten, sind der 16.03.2020 - zu diesem Zeitpunkt brach Corona seit einigen Tagen in Europa aus. \\Am 15.10.2008 bzw. Sep.-Okt. 2008 fand der Höhepunkt der Weltwirtschaftskrise statt, kurz nachdem die Investmentbank Lehman Brothers Insolvenz melden musste.
+
+\subsection*{b)}
+<<myrcode4.2.2, out.width='13cm'>>=
+@
+\\
+Die gewählte Normalverteilung spiegelt die Daten nicht optimal. Der Erwartungswert wird zum Beispiel viel niedriger angesetzt.
+\subsection*{c)}
+\subsubsection*{$(i)$}
+<<myrcode4.2.3>>=
+@
+Die Wahrscheinlichkeit dafür, dass der S\&P 500 am nächsten Tag, falls normal verteilt, um $\qty{1}{\percent}$ oder mehr steigt, beträgt ca. $\qty{21.2}{\percent}$.
+\subsubsection*{$(ii)$}
+<<myrcode4.2.4>>=
+@
+Die Wahrscheinlichkeit dafür, dass der S\&P 500 am nächsten Tag, falls normal verteilt, um $\qty{2}{\percent}$ oder mehr fällt, beträgt ca. $\qty{4.56}{\percent}$.
+\subsubsection*{$(iii)$}
+<<myrcode4.2.5>>=
+@
+Die Wahrscheinlichkeit dafür, dass der S\&P 500 bei einem Ausgangsindex von 5000 Punkten am nächsten Tag, falls normal verteilt, bei einem Index zwischen 4950 und 5050 Punkten liegt, beträgt ca. $\qty{59.31}{\percent}$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Monte-Carlo-Simulation}
+\subsection*{a)}
+<<myrcode4.3.1>>=
+@
+Der Wert von $simDayReturn$ gibt, nach der passenden Normalverteilung, eine "zufällige" prozen-tuale Kursveränderung. In $newStockPrice$ wird der neue Indexwert für den Tag gespeichert.
+\subsection*{b)}
+<<myrcode4.3.2>>=
+@
+In der ersten Ausgabe werden die ersten 6 Werte der Simulation angezeigt, also die ersten 6 Tage eines Bösrenjahres. Die zweite Ausgabe zeigt den letzten Wert der Simulation und somit den Index des letzten Tages des Börsenjahres.
+
+\subsection*{c)}
+<<myrcode4.3.3>>=
+@
+In der oberen Simulation wurde ein Börsenjahr 1000 mal simuliert und jeweils der Wert des letzten Tages berüksichtigt. Die Werte zeigen mit Hilfe des Histogramms eine ungefähr normalverteilte Verteilung mit einem Erwartungswert (peak) zwischen 5000 und 6000 Punkten.
+\subsection*{d)}
+Die Simulation ist möglicherweise für einen "ruhigen" Jahresverlauf zumindest grundsätzlich geeignet. Es werden jedoch keine unvorhersehbaren Ereignisse (z.B. eine Weltwirtschaftskrise) realistisch dargestellt, somit ist eine realitätsgetreue Simulation eher schwer realisierbar, solange man nicht mehrere Faktoren berüksichtigt.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{ZGWS}
+\subsection*{a)}
+Sei $X$ die Gesamtdauer, bis alle 20 Übungsaaufgaben durchgerechnet wurden. $X$ ist $Exp(0.04)$ verteilt mit $\lambda = 0.04$.
+Damit gilt:\\
+\begin{flalign*}
+\mathds{E}(X) & = \frac{1}{\lambda} = \frac{1}{0.04} = 25&\\
+Var(X)  & = \frac{1}{\lambda^2} = \frac{1}{0.04^2} = 625&
+\end{flalign*}
+Nach ZWGS $\Rightarrow X_1+...+X_{20} \overset{approx}{\sim} N(\underbrace{20 \cdot 25}_\text{$n \cdot \mu$}, \underbrace{20 \cdot 625}_\text{$n \cdot \sigma^2$})$.
+
+\subsection*{b)}
+Zu berechnen ist die Wahrscheinlichkeit, dass das Bearbeiten der Aufgaben weniger als $\qty{10}{\hour}$, also $\qty{600}{\minute}$ dauert: $P(X_1+...+X_{20} \leq 600)$.
+<<myrcode4.4.1>>=
+@
+Die Wahrscheinlichkeit beträgt also ca. $\qty{81.45}{\percent}$.
+
+\subsection*{c)}
+<<myrcode4.4.2, out.width='12cm'>>=
+@
+\newline Die Approximation aus b) liegt unterhalb der Gammaverteilung und ist somit zu niedrig.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Schäzfunktion} %%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{a)}
+
+\begin{flalign*}
+\hat{\mu}_1 & = \frac{1}{2}(X_1+X_2)&\\
+\mathds{E}(\hat{\mu}_1)  & = \frac{1}{2}(\mathds{E}(X_1)+\mathds{E}(X_2)) = \frac{2\mu}{2} = \mu&\\
+Bias(\hat{\mu}_1) & = \mathds{E}(\hat{\mu}_1) - \mu = \mu - \mu = 0&\\
+Var(\hat{\mu}_1) & = \frac{1}{2^2}(Var(X_1)+Var(X_2)) = \frac{2\sigma^2}{4}=\frac{\sigma^2}{2}&
+\end{flalign*}
+
+\\
+
+\begin{flalign*}
+\hat{\mu}_2 & = \frac{1}{6}(X_1+X_2+X_3)+\frac{1}{2}X_4&\\
+\mathds{E}(\hat{\mu}_2)  & = \frac{1}{6}(\mathds{E}(X_1)+\mathds{E}(X_2)+\mathds{E}(X_3))+\frac{1}{2}\mathds{E}(X_4) = \frac{3\mu}{6} + \frac{\mu}{2}= \mu&\\
+Bias(\hat{\mu}_2) & = \mathds{E}(\hat{\mu}_2) - \mu = \mu - \mu = 0&\\
+Var(\hat{\mu}_2) & = \frac{1}{6^2}(Var(X_1)+Var(X_2)+Var(X_3))+\frac{1}{2^2}Var(X_4) = \frac{3\sigma^2}{36}+\frac{\sigma^2}{4}=\frac{\sigma^2}{3}&
+\end{flalign*}
+
+\\
+
+\begin{flalign*}
+\hat{\mu}_3 & = \frac{1}{5}(X_1+X_3)+\frac{1}{6}(X_2+X_4)+\frac{1}{4}X_5&\\
+\mathds{E}(\hat{\mu}_3)  & = \frac{1}{5}(\mathds{E}(X_1)+\mathds{E}(X_3))+\frac{1}{6}(\mathds{E}(X_2)+\mathds{E}(X_4))+\frac{1}{4}\mathds{E}(X_5) = \frac{2\mu}{5} + \frac{2\mu}{6} + \frac{\mu}{4}= \frac{59}{60}\mu&\\
+Bias(\hat{\mu}_3) & = \mathds{E}(\hat{\mu}_3) - \mu = \frac{59}{60}\mu - \mu = \frac{-1}{60}\mu&\\
+Var(\hat{\mu}_3) & = \frac{1}{5^2}(Var(X_1)+Var(X_3))+\frac{1}{6^2}(Var(X_2)+Var(X_4))+\frac{1}{4^2}Var(X_5)&\\
+                 & = \frac{2\sigma^2}{25}+\frac{2\sigma^2}{36}+\frac{\sigma^2}{16}&\\
+                 & = \frac{713}{3600}\sigma^2&
+\end{flalign*}
+\\
+Um einen erwartungstreuen Schätzer zu wählen, muss der Bias 0 sein. Dies ist der Fall bei $\hat{\mu}_1$ und $\hat{\mu}_2$. Da $Var(\hat{\mu}_2) < Var(\hat{\mu}_1)$, kann letzendlich $\hat{\mu}_2$ als geeignetster Schätzer gewählt werden, dieser ist also effizient.
+
+\subsection*{b)}
+<<myrcode4.5.1>>=
+@
+\\
+Schätzer $\hat{\mu}_1$ ist grafisch zu wählen, da dieser am meisten der wahren Verteilung (schwarzer Graph) entspricht.
+\end{document}

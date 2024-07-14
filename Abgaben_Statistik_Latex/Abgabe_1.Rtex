@@ -1,0 +1,90 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[rightcaption]{sidecap}
+\usepackage{blindtext}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=37mm,
+ right=37mm
+ }
+
+
+
+\title{Statistik I}
+\author{Paul Strimtu \\ {\small 3898312}}
+\date{Abgabe 1: 20 November 2023}
+
+\begin{document}
+\maketitle
+
+\section{Histogramm}
+<<echo=FALSE, cache=FALSE>>=
+read_chunk("Abgabe_1/R_Abgabe_1.1_Hist.R")
+@
+\subsection{a)}
+Anzahl der Personen aus der Stichprobe (abs. Häufigkeit) in den jeweiligen Intervallen (Intervall-Variablen passend zur Tabelle aus 1b)):
+<<myrcode1.1.1>>=
+@
+\pagebreak
+\subsection{b)}
+\subsubsection{}
+Relative Häufigkeiten und n ausgerechnet:
+<<myrcode1.1.2>>=
+@
+\subsubsection{}
+Säulenhöhe ausgerechnet:
+<<myrcode1.1.3>>=
+@
+\subsubsection{}
+\includegraphics[scale=0.25]{Abgabe_1/Statistik_1.1b.jpg}
+\subsection{c)}
+\includegraphics[scale=0.25]{Abgabe_1/Statistik_1.1c2.jpg}
+\pagebreak
+
+\section{Mittelwert, Median, Varianz \& Quantile}
+\subsection{a)}
+<<myrcode1.2.1>>=
+@
+\subsection{b)}
+Berechnung des Mittelwertes und des Medians:
+<<myrcode1.2.2>>=
+@
+\subsection{c)}
+Brechnung der nicht korrigierten Varianz:
+<<myrcode1.2.3>>=
+@
+\subsection{d)}
+Berechnung des 0.9-Quantilis mit der Formel aus dem Skript:
+<<myrcode1.2.4>>=
+@
+\pagebreak
+\section{ECDF \& Boxplot}
+\subsection{a)}
+Ca. 69\% der Schafr sind schwerer als 15 kg.
+\subsection{b)}
+\begin{itemize}
+            \item $x_{min}  \approx 5.4  (kg)$,
+            \item $x_{0.25} \approx 14.1 (kg)$,
+            \item $x_{0.50} \approx 19.4 (kg)$,
+            \item $x_{0.75} \approx 22.7 (kg)$,
+            \item $x_{max}  \approx 33.9 (kg)$
+            \end{itemize}
+\subsection{c)}
+\includegraphics[scale=0.25]{Abgabe_1/Statistik_1.3c.jpg}
+\pagebreak
+\section{Streudiagramm \& Korrelationskoesffizient}
+Das bekannte dataset mtcars beinhaltet unterschiedliche Daten, wie Kraftstoffverbrauch (mpg),
+hp (PS) usw., zu 32 US Oldtimern aus den 1970er Jahren.
+Im folgenden habe ich versucht eine Korrelation zwischen dem Kraftstoffverbrauch und den hp der Autos zu finden:
+<<myrcode1.3.1>>=
+@
+Das Ergebnis zeigt eine (starke) Korrelation von ca. -0.776, was für uns erstmal überraschend sein müsste, da
+wir ein PS-starkes Auto meist mit einem hohen Kraft\-stoff\-ver\-brauch in Beziehung setzen, was auch zu einer positiven Korrelation führen würde (je mehr desto mehr).
+Die oberen Daten stammen jedoch auch den USA, wo die Einhheit mpg (miles per gallon) und nicht l/100km verwendet wird. Der Wert der Einheit sinkt also bei einem hohen Kraftstoffverbrauch, da "weniger miles per gallon" gefahren werden können.
+Dies führt letzendlich zur negativen Korrelation, wie auch der folgede Scatterplot zeigt:
+<<myrcode1.3.2>>=
+@
+
+\end{document}
